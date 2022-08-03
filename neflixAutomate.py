@@ -7,9 +7,11 @@ browser = webdriver.Chrome(executable_path="/home/bunty/Downloads/chromedriver")
 browser.get('https://www.netflix.com/in/browse/genre/839338')
 
 
+
 # Printing the heading
 columns = shutil.get_terminal_size().columns
-print("NETFLIX TRAILER AUTOMATION STARTS".center(columns) )
+print("NETFLIX TRAILER AUTOMATION STARTS".center(columns))
+
 
 # Getting the movie name and clicking on the movie
 movie_name = browser.find_element(By.CLASS_NAME,
@@ -19,8 +21,13 @@ print("The name of the movie is ", Name)
 movie_name.click()
 
 #Clicking on the trailer video
-video_element = browser.find_element(By.CLASS_NAME, "additional-video-image-wrapper")
-video_element.click()
+element = browser.find_element(By.CLASS_NAME, "additional-video-image-wrapper")
+browser.execute_script("var ele = arguments[0];ele.addEventListener('click', function() {ele.setAttribute('automationTrack','true');});",element)
+element.click()
+video = element.get_attribute("automationTrack")
+if video :
+  print("Trailer is playing",video)
+
 
 #Bonus
 #Getting the summary
